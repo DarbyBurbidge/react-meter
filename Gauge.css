@@ -1,0 +1,103 @@
+
+.gauge {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -200px;
+}
+/* #meter-1 {
+    all: unset;
+    margin: 0 .1rem;
+    padding: 0;
+    height: 1rem;
+    width: 6rem;
+    border-radius: .5rem;
+    color: green;
+    background-color: rgba(152, 251, 152, 0.667);
+}
+
+#meter-2 {
+    all: unset;
+    margin: 0 .1rem;
+    padding: 0;
+     height: 1rem;
+    width: 6rem;
+    border-radius: 2rem;
+    color: yellow;
+    background-color: rgba(238, 232, 170, 0.667);
+}
+
+#meter-3 {
+    all: unset;
+    margin: 0 .1rem;
+    padding: 0;
+     height: 1rem;
+    width: 6rem;
+    border-radius: 1rem;
+    background-color: rgb(216, 112, 147, 0.667);
+}
+#meter-3::-moz-meter-bar {
+    background: red;
+    border-radius: .5rem;
+}
+#meter-1::-moz-meter-bar {
+    background: green;
+    border-radius: .5rem;
+}
+#meter-2::-moz-meter-bar {
+    background: yellow;
+    border-radius: .5rem;
+} */
+
+svg {
+    width: 1000px;
+    height: 1000px;
+}
+
+svg circle {
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+}
+
+#meter-1, #meter-2, #meter-3 {
+    stroke-dasharray: 110, 610;
+}
+
+svg circle:nth-child(1), svg circle:nth-child(2) {
+    stroke-dashoffset: 360;
+}
+
+svg circle:nth-child(3), svg circle:nth-child(4) {
+    stroke-dashoffset: 235;
+}
+
+svg circle:nth-child(5), svg circle:nth-child(6) {
+    stroke-dashoffset: 110;
+}
+
+svg #meter-1 {
+    stroke:rgba(152, 251, 152, 1);
+}
+
+svg circle:nth-child(2) {
+    stroke: green;
+}
+
+svg #meter-2 {
+    stroke:rgba(238, 232, 170, 1)
+}
+
+svg circle:nth-child(4) {
+    stroke: yellow;
+}
+
+svg #meter-3 {
+    stroke: rgba(255, 182, 193, 1)
+}
+
+svg circle:nth-child(6) {
+    stroke: red;
+}
