@@ -17,6 +17,7 @@ export const Gauge: React.FC<Props> = (props) => {
     const breakpoints = [numBreakpoints]
     let gaugeSVG: string = ''
     let meterStateString = 'setMeters({ '
+    let displayStateString = 'setDisplay({ '
     for(let i = 0; i < numBreakpoints; i++) {
         breakpoints[i] = ((i+1)/(numBreakpoints+1));
         console.log(breakpoints[i])
@@ -24,6 +25,7 @@ export const Gauge: React.FC<Props> = (props) => {
 
         if (i == 0) {
             meterStateString += `...meters, ${`meterVal${i}`}: ` + `${(base > breakpoints[0] ? 1 : (base / breakpoints[0]))}`
+            displayStateString += `...display, display${i}: eval('meters.meterVal${i} > 0 && base > 0')`
             gaugeSVG += `<circle id=meter-${i} cx=${props.posX} cy=${props.posY} r="114.6"></circle>` +
                         `<circle id='meter-${i} meter-fg-${i}' cx=${props.posX} cy=${props.posY} r="114.6"></circle>`
         }
@@ -33,22 +35,26 @@ export const Gauge: React.FC<Props> = (props) => {
         meterStateString += `, ${`meterVal${i+1}`}: ` + `${(base - breakpoints[i] < 0 ?
                 0 : 
             Math.min((base - breakpoints[i]) / breakpoints[0], 1))}`
+        displayStateString += `, display${i+1}: eval('meters.meterVal${i+1} > 0 && base > 0')`
         
-        //setDisplay({...display, [`display${i}`]: (meters.[`meterVal${i}`] > 0 && base > 0)})
     }
     meterStateString += ' })'
+    displayStateString += ' })'
     if(Object.keys(meters).length == 0) {
         eval(meterStateString)
     }
+    if(Object.keys(meters).length !== 0 && Object.keys(display).length == 0) {
+        eval(displayStateString)
+    }
     useEffect(() => {
         for(let i = 0; i < Object.keys(meters).length; i++) {
-            const circle = document.getElementById(`meter-${i} meter-fg-${i}`)
-            if (circle && Object.keys(meters).length > 0) {
+            const overlay = document.getElementById(`meter-${i} meter-fg-${i}`)
+            if (overlay && Object.keys(meters).length > 0) {
                 if (/*eval(`display.display${i}`)*/ true) {
                     const meterEval = eval(`meters.meterVal${i}`)
-                    const strokeLength = eval(`${meterEval} * 110`)
-                    const strokeGap = eval('(720 - `${meterEval}` * 110)')
-                    circle.setAttribute("style", `stroke-dasharray: ${strokeLength}, ${strokeGap}`)
+                    const strokeLength = eval(`${meterEval} * 360 / (${numBreakpoints}+1)`)
+                    const strokeGap = eval(`720 - (${meterEval} * 360 / (${numBreakpoints}+1))`)
+                    overlay.setAttribute("style", `stroke-dasharray: ${strokeLength}, ${strokeGap}`)
                 }
                 console.log(`meter-fg-${i}`)
                 //true ?  : {display: `none`}
@@ -65,7 +71,8 @@ export const Gauge: React.FC<Props> = (props) => {
         display2: (meters.meterVal2 > 0 && base > 0),
         display3: (meters.meterVal3 > 0 && base > 0)
     })*/
-    console.log(true ? '{strokeDasharray: `${33}` * 110, (720 - `${33}` * 110)}' : '{display: `none`}')
+    console.log(meters)
+    console.log(display)
 
    
     return(
