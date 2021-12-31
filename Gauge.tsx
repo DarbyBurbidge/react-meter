@@ -3,50 +3,70 @@ import parse from "html-react-parser";
 import "./Styles/Gauge.css";
 
 interface Props {
-    value: string;
-    breakpoints?: string
+    value: number;
+    breakpoints: number
     posX: string
     posY: string
 }
 
 export const Gauge: React.FC<Props> = (props) => {
-    const [ base, setBase ] = useState(Number(props.value))
-    const [ numBreakpoints, setNumBreakpoints ] = useState(Number(props.breakpoints))
+    const [ base, setBase ] = useState(props.value)
+    const [ prevBase, setPrevBase ] = useState(base)
+    const [ numBreakpoints, setNumBreakpoints ] = useState(props.breakpoints)
     const [ meters, setMeters ] = useState({})
     const [ display, setDisplay ] = useState({})
+    const [recalcDisplay, setRecalcDisplay] = useState(true)
+    if(base != props.value || base != prevBase) {
+            setPrevBase(base)
+            setBase(props.value)
+            setRecalcDisplay(true)
+    } 
+    if (numBreakpoints != props.breakpoints) {
+        console.log("bad breakpoints")
+        setNumBreakpoints(props.breakpoints)
+    }
+    // console.log(base)
+    // console.log(prevBase)
+    
     const breakpoints = [numBreakpoints]
+    
     let gaugeSVG: string = ''
     let meterStateString = 'setMeters({ '
     let displayStateString = 'setDisplay({ '
     for(let i = 0; i < numBreakpoints; i++) {
         breakpoints[i] = ((i+1)/(numBreakpoints+1));
-        console.log(breakpoints[i])
+        //console.log(breakpoints[i])
         
 
         if (i == 0) {
-            meterStateString += `...meters, ${`meterVal${i}`}: ` + `${(base > breakpoints[0] ? 1 : (base / breakpoints[0]))}`
-            displayStateString += `...display, display${i}: eval('meters.meterVal${i} > 0 && base > 0')`
+            meterStateString += ` ${`meterVal${i}`}: ` + `${(base > breakpoints[0] ? 1 : (base / breakpoints[0]))}`
+            displayStateString += ` display${i}: eval('meters.meterVal${i} > 0 && base > 0')`
             gaugeSVG += `<circle id=meter-${i} cx=${props.posX} cy=${props.posY} r="114.6"></circle>` +
                         `<circle id='meter-${i} meter-fg-${i}' cx=${props.posX} cy=${props.posY} r="114.6"></circle>`
         }
         gaugeSVG += `<circle id=meter-${i+1} cx=${props.posX} cy=${props.posY} r="114.6"></circle>` +
                     `<circle id='meter-${i+1} meter-fg-${i+1}' cx=${props.posX} cy=${props.posY} r="114.6"></circle>`
-        console.log("hmm...")
         meterStateString += `, ${`meterVal${i+1}`}: ` + `${(base - breakpoints[i] < 0 ?
                 0 : 
             Math.min((base - breakpoints[i]) / breakpoints[0], 1))}`
         displayStateString += `, display${i+1}: eval('meters.meterVal${i+1} > 0 && base > 0')`
-        
     }
     meterStateString += ' })'
     displayStateString += ' })'
-    if(Object.keys(meters).length == 0) {
+    if(Object.keys(meters).length == 0 || Object.keys(meters).length != numBreakpoints+1 || (prevBase != base)) {
         eval(meterStateString)
     }
-    if(Object.keys(meters).length !== 0 && Object.keys(display).length == 0) {
+    if((Object.keys(meters).length !== 0) && ((Object.keys(display).length != Object.keys(meters).length) || (prevBase != base))) {
         eval(displayStateString)
+        //console.log(display)
     }
     useEffect(() => {
+        
+        if((Object.keys(meters).length !== 0) && recalcDisplay) {
+            eval(displayStateString)
+            //console.log(display)
+            setRecalcDisplay(false)
+        }
         for(let i = 0; i < Object.keys(meters).length; i++) {
             const lineWidth = 10
             const background = document.getElementById(`meter-${i}`)
@@ -58,30 +78,19 @@ export const Gauge: React.FC<Props> = (props) => {
             const overlayStroke = backStroke * meterEval
             const overLayGap = (720 - overlayStroke)
             
-            console.log(backStroke)
+            //console.log(backStroke)
             const backGap = (720 - backStroke)
             background?.setAttribute("style", `stroke-dasharray: ${backStroke.toFixed(0)}, ${backGap.toFixed(0)}; stroke-dashoffset: ${(offset).toFixed(0)}; stroke: hsl(${120 - i*60}, 70%, 25%);}`)
             if (eval(`display.display${i}`) && overlay && Object.keys(meters).length > 0) {
-                
+                //console.log(eval(`display.display${i}`))
                 overlay.setAttribute("style", `stroke-dasharray: ${overlayStroke.toFixed(0)}, ${overLayGap.toFixed(0)}; stroke-dashoffset: ${offset.toFixed(0)}; stroke: hsl(${120 - i*60}, 100%, 50%);}`)
-                console.log(`meter-fg-${i}`)
+                //console.log(`meter-fg-${i}`)
             } else if (overlay) {
                 overlay.setAttribute("style", "display: none")
             }
         }
     });
-    /*const val1 = base > breakpoints[0] ? 1 : (base / breakpoints[0]);
-    const val2 = base - breakpoints[0] < 0 ? 0 : Math.min((base - breakpoints[0]) / breakpoints[0], 1);
-    const val3 = base - breakpoints[1] < 0 ? 0 : Math.min((base - breakpoints[1]) / breakpoints[0], 1);*/
-    
-    
-    /*
-        display1: (meters.meterVal1 > 0 && base > 0),
-        display2: (meters.meterVal2 > 0 && base > 0),
-        display3: (meters.meterVal3 > 0 && base > 0)
-    })*/
-    console.log(meters)
-    console.log(display)
+    //console.log(meters)
 
    
     return(
