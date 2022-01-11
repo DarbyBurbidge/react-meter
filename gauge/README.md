@@ -19,7 +19,7 @@ const someNumber = .9
 <ReactMeter value={someNumber} />
 ```
 
-![example image](./GuageExampleAlpha.png)
+![example image](https://github.com/DarbyBurbidge/react-meter/blob/dev/gauge/.images/GuageExampleAlpha.png)
 
 ### There are a number of customizable options (Note: the color function used is hsl):
 
@@ -52,7 +52,7 @@ const someNumber = .9
 />
 ```
 
-![example of customization](./GuageCustomExample.png)
+![example of customization](https://github.com/DarbyBurbidge/react-meter/blob/dev/gauge/.images/GuageCustomExample.png)
 
 ### This is my first published npm package and any recommendations or advice would be much appreciated.
 
