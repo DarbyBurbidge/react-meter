@@ -19,7 +19,7 @@ const someNumber = .9
 <ReactMeter value={someNumber} />
 ```
 
-![example image](https://github.com/DarbyBurbidge/react-meter/blob/dev/gauge/.images/GuageExampleAlpha.png)
+![example image](https://github.com/DarbyBurbidge/react-meter/blob/dev/react-meter/.images/GuageExampleAlpha.png)
 
 ### There are a number of customizable options (Note: the color function used is hsl):
 | property | Description | Default |
@@ -32,6 +32,7 @@ const someNumber = .9
 | colorShift: | number representing how far the hue should shift with each segment (left to right) | default: 60 |
 | saturation: | number representing the saturation level for the foreground stroke | default: 100 |
 | luminosity: | number representing the luminosity level for the foreground stroke | default: 50 |
+
 
 ```jsx
 <ReactMeter
@@ -46,7 +47,7 @@ const someNumber = .9
 />
 ```
 
-![example of customization](https://github.com/DarbyBurbidge/react-meter/blob/dev/gauge/.images/GuageCustomExample.png)
+![example of customization](https://github.com/DarbyBurbidge/react-meter/blob/dev/react-meter/.images/GuageCustomExample.png)
 
 ### This is my first published npm package and any recommendations or advice would be much appreciated.
 
