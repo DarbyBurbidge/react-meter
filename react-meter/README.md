@@ -14,7 +14,7 @@ then import and use:
 ```jsx
 import { ReactMeter } from "react-meter";
 
-const someNumber = .9
+const someNumber = .8
 
 <ReactMeter value={someNumber} />
 ```
@@ -33,11 +33,11 @@ const someNumber = .9
 | saturation: | number representing the saturation level for the foreground stroke | default: 100 |
 | luminosity: | number representing the luminosity level for the foreground stroke | default: 50 |
 
-
+  
 ```jsx
 <ReactMeter
     className="react-meter"
-    value={someNumber} 
+    value={.9} 
     sections={6}
     numColors={6}
     colorStart={120}
