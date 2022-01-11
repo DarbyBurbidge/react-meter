@@ -25,19 +25,12 @@ const someNumber = .9
 | property | Description | Default |
 | --- | --- | --- |
 | className: | string that is used to specify the class of the enclosing div | (default: "react-meter") Note: the SVG has id="svg-react-meter" but is not customizable |
-| --- | --- | --- |
 | value: | number between 0 and 1 representing the percentage to fill the meter. | none, required: true |
-| --- | --- | --- |
 | sections: | number representing how many segments to build the meter. | default: 3 |
-| --- | --- | --- |
 | numColors: | number representing the maximum number of colors (once passed the colors repeat the pattern: if max is 3, color #4 will be the same as color #1 e.g.). | default: sections |
-| --- | --- | --- |
 | colorStart: | number representing the hue value to start (start position is the leftmost segment) | default: 120 |
-| --- | --- | --- |
 | colorShift: | number representing how far the hue should shift with each segment (left to right) | default: 60 |
-| --- | --- | --- |
 | saturation: | number representing the saturation level for the foreground stroke | default: 100 |
-| --- | --- | --- |
 | luminosity: | number representing the luminosity level for the foreground stroke | default: 50 |
 
 ```jsx
