@@ -24,8 +24,8 @@ const someNumber = .9
 ### There are a number of customizable options (Note: the color function used is hsl):
 | property | Description | Default |
 | --- | --- | --- |
-| className: | string that is used to specify the class of the enclosing div | (default: "react-meter") Note: the SVG has id="svg-react-meter" but is not customizable |
-| value: | number between 0 and 1 representing the percentage to fill the meter. | none, required: true |
+| className: | string that is used to specify the class of the enclosing div | default: "react-meter" **Note:** the SVG has id="svg-react-meter" but is not customizable |
+| value: | number between 0 and 1 representing the percentage to fill the meter. | default: none, required: true |
 | sections: | number representing how many segments to build the meter. | default: 3 |
 | numColors: | number representing the maximum number of colors (once passed the colors repeat the pattern: if max is 3, color #4 will be the same as color #1 e.g.). | default: sections |
 | colorStart: | number representing the hue value to start (start position is the leftmost segment) | default: 120 |
