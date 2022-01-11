@@ -1,6 +1,6 @@
 {
   "name": "react-meter",
-  "version": "0.1.15",
+  "version": "1.0.3",
   "types": "./index.d.ts",
   "dependencies": {
     "html-react-parser": "^1.4.5",

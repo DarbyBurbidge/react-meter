@@ -3,18 +3,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactMeter = void 0;
 const React = require("react");
 const html_react_parser_1 = require("html-react-parser");
+const existsAndInRange = (value, min, max) => {
+    if (value == null) {
+        return false;
+    }
+    return ((value >= min) && (value <= max));
+};
 const ReactMeter = (props) => {
-    const className = props.className ? props.className : "gauge";
+    const className = (props.className && typeof (props.className) === "string") ? props.className : "gauge";
     const cx = "50%";
     const cy = "95%";
     const baseValue = props.value;
-    const sections = props.sections ? props.sections : 3;
+    const sections = existsAndInRange(props.sections, 1, 6) ? props.sections : 3;
     const numBreakpoints = sections - 1;
-    const colorStart = props.colorStart != null ? props.colorStart : 120;
-    const colorShift = props.colorShift != null ? props.colorShift : 60;
-    const numColors = props.numColors != null ? props.numColors : sections;
-    const luminosity = props.luminosity != null ? props.luminosity : 50;
-    const saturation = props.saturation != null ? props.saturation : 100;
+    const colorStart = existsAndInRange(props.colorStart, 0, 360) ? props.colorStart : 120;
+    const colorShift = existsAndInRange(props.colorShift, 0, 359) ? props.colorShift : 60;
+    const numColors = existsAndInRange(props.numColors, 0, sections) ? props.numColors : sections;
+    const luminosity = existsAndInRange(props.luminosity, 0, 100) ? props.luminosity : 50;
+    const saturation = existsAndInRange(props.luminosity, 0, 100) ? props.saturation : 100;
     const meters = [];
     const display = [];
     const breakpoints = [numBreakpoints];
@@ -69,7 +75,7 @@ const ReactMeter = (props) => {
         }
     });
     return (React.createElement("div", { className: className },
-        React.createElement("svg", { id: "svg", style: { top: '5rem', margin: 'auto', width: '100%', height: '100%' } }, (0, html_react_parser_1.default)(gaugeSVG))));
+        React.createElement("svg", { id: "svg-react-meter", style: { top: '5rem', margin: 'auto', width: '100%', height: '100%' } }, (0, html_react_parser_1.default)(gaugeSVG))));
 };
 exports.ReactMeter = ReactMeter;
 //# sourceMappingURL=ReactMeter.js.map
