@@ -1,6 +1,6 @@
 {
   "name": "react-meter",
-  "version": "1.0.7",
+  "version": "1.0.12",
   "types": "./index.d.ts",
   "dependencies": {
     "html-react-parser": "^1.4.5",
@@ -10,8 +10,15 @@
     "type": "git",
     "url": "https://github.com/DarbyBurbidge/react-meter.git"
   },
+  "keywords": [
+    "UI",
+    "TypeScript",
+    "Meter",
+    "React",
+    "Component"
+  ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com:_authToken=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"
   },
   "scripts": {
     "build": "rm -rf ./lib && tsc",
